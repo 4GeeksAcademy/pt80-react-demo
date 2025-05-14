@@ -135,8 +135,14 @@ const Home = () => {
   return (
     <div className="row pt-2">
       <div className="col col-8 offset-2">
+        {/*
+          This button toolbar's contents (the ButtonGroups)
+          are passed in as the special children prop from this side.
+        */}
         <ButtonToolbar>
+          {/* The children prop starts with the stuff here: */}
           <ButtonGroup>
+            {/* These are the children of the first ButtonGroup: */}
             <Button label="Some Label" variant="secondary" />
             <Button label="Some Label" variant="warning" />
             <Button label="Some Label" variant="danger" />
@@ -146,6 +152,7 @@ const Home = () => {
             <Button variant="warning" />
             <Button variant="danger" />
           </ButtonGroup>
+          {/* And ends right before the line this comment is on. */}
         </ButtonToolbar>
 
         <hr />
