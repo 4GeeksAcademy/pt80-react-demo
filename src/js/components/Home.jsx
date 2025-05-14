@@ -1,4 +1,5 @@
 import BookCard from "./BookCard";
+import Button, { ButtonGroup, ButtonToolbar } from "./Button";
 
 const Home = () => {
   const books = [
@@ -132,11 +133,39 @@ const Home = () => {
   ];
 
   return (
-    <div className="row">
+    <div className="row pt-2">
       <div className="col col-8 offset-2">
-        {books.map((book, idx) => (
+        <ButtonToolbar>
+          <ButtonGroup>
+            <Button label="Some Label" variant="secondary" />
+            <Button label="Some Label" variant="warning" />
+            <Button label="Some Label" variant="danger" />
+          </ButtonGroup>
+          <ButtonGroup>
+            <Button variant="secondary" />
+            <Button variant="warning" />
+            <Button variant="danger" />
+          </ButtonGroup>
+        </ButtonToolbar>
+
+        <hr />
+
+        <ButtonGroup size="sm">
+          <Button />
+          <Button />
+          <Button />
+        </ButtonGroup>
+
+        <hr />
+
+        <ButtonGroup size="lg">
+          <Button outline />
+          <Button outline variant="danger" />
+        </ButtonGroup>
+
+        {/* {books.map((book, idx) => (
           <BookCard book={book} key={idx} />
-        ))}
+        ))} */}
       </div>
     </div>
   );
