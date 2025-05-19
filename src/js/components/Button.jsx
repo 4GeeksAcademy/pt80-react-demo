@@ -25,24 +25,24 @@ const Button = ({
   );
 };
 
-const LinkButton = ({ href, outline = false, variant = "primary" }) => {
-  return (
-    <a href={href} className={`btn btn-${outline ? "outline-" : ""}${variant}`}>
-      Button
-    </a>
-  );
-};
+// const LinkButton = ({ href, outline = false, variant = "primary" }) => {
+//   return (
+//     <a href={href} className={`btn btn-${outline ? "outline-" : ""}${variant}`}>
+//       Button
+//     </a>
+//   );
+// };
 
-const LabelButton = ({ htmlFor, outline = false, variant = "primary" }) => {
-  return (
-    <label
-      htmlFor={htmlFor}
-      className={`btn btn-${outline ? "outline-" : ""}${variant}`}
-    >
-      Button
-    </label>
-  );
-};
+// const LabelButton = ({ htmlFor, outline = false, variant = "primary" }) => {
+//   return (
+//     <label
+//       htmlFor={htmlFor}
+//       className={`btn btn-${outline ? "outline-" : ""}${variant}`}
+//     >
+//       Button
+//     </label>
+//   );
+// };
 
 /**
  * children is a special prop, it's the stuff that's
