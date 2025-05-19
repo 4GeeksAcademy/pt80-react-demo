@@ -1,5 +1,6 @@
 import BookCard from "./BookCard";
 import Button, { ButtonGroup, ButtonToolbar } from "./Button";
+import Container, { Col, Row } from "./Grid";
 
 const Home = () => {
   const books = [
@@ -133,48 +134,72 @@ const Home = () => {
   ];
 
   return (
-    <div className="row pt-2">
-      <div className="col col-8 offset-2">
-        {/*
+    <Container>
+      <Row>
+        <Col
+          width={{
+            sm: 12,
+            lg: 5,
+          }}
+          offset={{
+            sm: 0,
+            lg: 1,
+          }}
+        >
+          <p>I'm the left column!</p>
+        </Col>
+        <Col
+          width={{
+            sm: 12,
+            lg: 5,
+          }}
+        >
+          <p>I'm the right column!</p>
+        </Col>
+      </Row>
+      <Row>
+        <div className="col col-8 offset-2">
+          {/*
           This button toolbar's contents (the ButtonGroups)
           are passed in as the special children prop from this side.
         */}
-        <ButtonToolbar>
-          {/* The children prop starts with the stuff here: */}
-          <ButtonGroup>
-            {/* These are the children of the first ButtonGroup: */}
-            <Button label="Some Label" variant="secondary" />
-            <Button label="Some Label" variant="warning" />
-            <Button label="Some Label" variant="danger" />
+          <ButtonToolbar>
+            {/* The children prop starts with the stuff here: */}
+            <ButtonGroup>
+              {/* These are the children of the first ButtonGroup: */}
+              <Button label="Some Label" variant="secondary" />
+              <Button label="Some Label" variant="warning" />
+              <Button label="Some Label" variant="danger" />
+            </ButtonGroup>
+            <ButtonGroup>
+              <Button variant="secondary" />
+              <Button variant="warning" />
+              <Button variant="danger" />
+            </ButtonGroup>
+            {/* And ends right before the line this comment is on. */}
+          </ButtonToolbar>
+
+          <hr />
+
+          <ButtonGroup size="sm">
+            <Button />
+            <Button />
+            <Button />
           </ButtonGroup>
-          <ButtonGroup>
-            <Button variant="secondary" />
-            <Button variant="warning" />
-            <Button variant="danger" />
+
+          <hr />
+
+          <ButtonGroup size="lg">
+            <Button outline />
+            <Button outline variant="danger" />
           </ButtonGroup>
-          {/* And ends right before the line this comment is on. */}
-        </ButtonToolbar>
 
-        <hr />
-
-        <ButtonGroup size="sm">
-          <Button />
-          <Button />
-          <Button />
-        </ButtonGroup>
-
-        <hr />
-
-        <ButtonGroup size="lg">
-          <Button outline />
-          <Button outline variant="danger" />
-        </ButtonGroup>
-
-        {/* {books.map((book, idx) => (
+          {/* {books.map((book, idx) => (
           <BookCard book={book} key={idx} />
         ))} */}
-      </div>
-    </div>
+        </div>
+      </Row>
+    </Container>
   );
 };
 

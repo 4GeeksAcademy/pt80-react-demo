@@ -90,4 +90,10 @@ const ButtonToolbar = ({ children }) => {
 };
 
 export default Button;
-export { ButtonGroup, ButtonToolbar, LinkButton, LabelButton, DivButton };
+export {
+  ButtonGroup,
+  ButtonToolbar,
+  // LinkButton,
+  // LabelButton,
+  DivButton,
+};
