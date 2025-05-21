@@ -7,5 +7,5 @@ div.waterclock {
 
 div.water {
   width: 100%;
-  transition: height 1000ms;
+  transition: height 1000ms linear;
 }

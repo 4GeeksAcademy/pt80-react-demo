@@ -10,9 +10,7 @@ const WaterClock = ({
       <div
         className="water"
         style={{ height: `${fill}%`, background: fillColor }}
-      >
-        &nbsp;
-      </div>
+      ></div>
     </div>
   );
 };
