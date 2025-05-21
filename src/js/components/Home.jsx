@@ -1,7 +1,7 @@
 import Container, { Col, Row } from "./Grid";
 import WaterClock from "./WaterClock";
 
-const Home = ({ time = new Date() }) => {
+const Home = ({ time }) => {
   return (
     <Container>
       <Row>
@@ -11,7 +11,7 @@ const Home = ({ time = new Date() }) => {
         </Col>
         {/* Hours 1s place */}
         <Col width={{ xl: 1 }}>
-          <WaterClock fill={((time.getHours()) % 10) * 10} />
+          <WaterClock fill={(time.getHours() % 10) * 10} />
         </Col>
         {/* Minutes 10s place */}
         <Col width={{ xl: 1 }}>
@@ -19,7 +19,7 @@ const Home = ({ time = new Date() }) => {
         </Col>
         {/* Minutes 1s place */}
         <Col width={{ xl: 1 }}>
-          <WaterClock fill={((time.getMinutes()) % 10) * 10} />
+          <WaterClock fill={(time.getMinutes() % 10) * 10} />
         </Col>
         {/* Seconds 10s place */}
         <Col width={{ xl: 1 }}>
@@ -27,7 +27,7 @@ const Home = ({ time = new Date() }) => {
         </Col>
         {/* Seconds 1s place */}
         <Col width={{ xl: 1 }}>
-          <WaterClock fill={((time.getSeconds()) % 10) * 10} />
+          <WaterClock fill={(time.getSeconds() % 10) * 10} />
         </Col>
       </Row>
     </Container>
