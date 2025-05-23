@@ -3,6 +3,10 @@ import Container, { Col, Row } from "./Grid";
 import BookCard from "./BookCard";
 
 const Home = ({}) => {
+  // This is a container for book objects:
+  const [books, setBooks] = useState([]);
+
+  // This is temporary storage for the book properties:
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [cover, setCover] = useState("");
@@ -15,6 +19,17 @@ const Home = ({}) => {
             className="mt-3"
             onSubmit={(ev) => {
               ev.preventDefault();
+              setBooks([
+                ...books,
+                {
+                  title,
+                  author,
+                  cover,
+                },
+              ]);
+              setTitle("");
+              setAuthor("");
+              setCover("");
             }}
           >
             <div className="form-floating mb-3">
