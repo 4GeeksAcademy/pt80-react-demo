@@ -91,6 +91,14 @@ const Home = ({}) => {
           </div>
         </Col>
       </Row>
+      <hr />
+      <Row>
+        <Col>
+          {books.map((book, idx) => (
+            <BookCard book={book} key={idx} />
+          ))}
+        </Col>
+      </Row>
     </Container>
   );
 };
