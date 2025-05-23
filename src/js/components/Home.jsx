@@ -1,74 +1,60 @@
 import { useEffect, useState } from "react";
 import Container, { Col, Row } from "./Grid";
-import WaterClock from "./WaterClock";
+import BookCard from "./BookCard";
 
 const Home = ({}) => {
-  const [time, setTime] = useState(new Date());
-  // const [value, setValue] = useState("Some state.");
-
-  useEffect(() => {
-    setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-  }, []);
-
-  // useEffect(() => {
-  //   console.log(value);
-  // }, [value]);
+  const [book, setBook] = useState({
+    title: null,
+    author: null,
+    cover: null,
+  });
 
   return (
     <Container>
-      {/* <Row>
-        <Col>
-          <input
-            type="text"
-            value={value}
-            onChange={(ev) => setValue(ev.target.value)}
-          />
-        </Col>
-      </Row> */}
       <Row>
-        {/* Hours 10s place */}
-        <Col offset={{ xl: 3 }} width={{ xl: 1 }}>
-          <WaterClock
-            fill={Math.floor(time.getHours() / 10) * 10}
-            fillColor={`hsl(${0} 95% 50%)`}
-          />
+        <Col>
+          <form
+            className="mt-3"
+            onSubmit={(ev) => {
+              ev.preventDefault();
+            }}
+          >
+            <div className="form-floating mb-3">
+              <input
+                id="title"
+                class="form-control form-control-lg"
+                type="text"
+                aria-label="title"
+              />
+              <label htmlFor="title">Title</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                id="author"
+                class="form-control form-control-lg"
+                type="text"
+                aria-label="author"
+              />
+              <label htmlFor="author">Author</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                id="cover-url"
+                class="form-control form-control-lg"
+                type="text"
+                aria-label="cover-url"
+              />
+              <label htmlFor="cover-url">Cover URL</label>
+            </div>
+            <div className="mb-3">
+              <button className="btn btn-primary">Add Book</button>
+            </div>
+          </form>
         </Col>
-        {/* Hours 1s place */}
-        <Col width={{ xl: 1 }}>
-          <WaterClock
-            fill={(time.getHours() % 10) * 10}
-            fillColor={`hsl(${(360 / 6) * 1} 95% 50%)`}
-          />
-        </Col>
-        {/* Minutes 10s place */}
-        <Col width={{ xl: 1 }}>
-          <WaterClock
-            fill={Math.floor(time.getMinutes() / 10) * 10}
-            fillColor={`hsl(${(360 / 6) * 2} 95% 50%)`}
-          />
-        </Col>
-        {/* Minutes 1s place */}
-        <Col width={{ xl: 1 }}>
-          <WaterClock
-            fill={(time.getMinutes() % 10) * 10}
-            fillColor={`hsl(${(360 / 6) * 3} 95% 50%)`}
-          />
-        </Col>
-        {/* Seconds 10s place */}
-        <Col width={{ xl: 1 }}>
-          <WaterClock
-            fill={Math.floor(time.getSeconds() / 10) * 10}
-            fillColor={`hsl(${(360 / 6) * 4} 95% 50%)`}
-          />
-        </Col>
-        {/* Seconds 1s place */}
-        <Col width={{ xl: 1 }}>
-          <WaterClock
-            fill={(time.getSeconds() % 10) * 10}
-            fillColor={`hsl(${(360 / 6) * 5} 95% 50%)`}
-          />
+        <Col>
+          <div className="mt-3">
+            <BookCard book={book} />
+          </div>
         </Col>
       </Row>
     </Container>
