@@ -1,7 +1,7 @@
 import rigoBaby from "../../img/rigo-baby.jpg";
 import "./BookCard.css";
 
-const BookCard = ({ book }) => {
+const BookCard = ({ book, showDelete = false, onDelete }) => {
   return (
     <div className="card mx-auto mb-2" style={{}}>
       <img
@@ -19,6 +19,15 @@ const BookCard = ({ book }) => {
             ? book.author
             : "Some Nerd (in the cool sense, because we know nerds are cool.)"}
         </p>
+        {showDelete ? (
+          <p className="card-text">
+            <button className="btn btn-danger" onClick={onDelete}>
+              <i class="fa-solid fa-dumpster-fire"></i>
+            </button>
+          </p>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

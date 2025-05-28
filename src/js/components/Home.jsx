@@ -11,27 +11,58 @@ const Home = ({}) => {
   const [author, setAuthor] = useState("");
   const [cover, setCover] = useState("");
 
+  /**
+   * This useEffect stores and retrieves book objects
+   * in localStorage so that the application remembers
+   * stuff when you reload the page.
+   */
+  useEffect(() => {
+    const library = localStorage.getItem("library");
+
+    if (!library) {
+      localStorage.setItem("library", "[]");
+    }
+
+    if (JSON.parse(library)?.length) {
+      setBooks(JSON.parse(library));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (books.length) {
+      localStorage.setItem("library", JSON.stringify(books));
+    }
+  }, [books]);
+
+  const handleSubmit = (ev) => {
+    ev.preventDefault();
+    if ([title, author, cover].some((x) => x)) {
+      setBooks([
+        ...books,
+        {
+          title,
+          author,
+          cover,
+        },
+      ]);
+      setTitle("");
+      setAuthor("");
+      setCover("");
+    }
+  };
+
+  const enableButton = () => [title, author, cover].some((x) => x);
+
+  const deleteBook = (idx) => {
+    localStorage.setItem("library", JSON.stringify(books.toSpliced(idx, 1)));
+    setBooks(books.toSpliced(idx, 1));
+  };
+
   return (
     <Container>
       <Row>
         <Col>
-          <form
-            className="mt-3"
-            onSubmit={(ev) => {
-              ev.preventDefault();
-              setBooks([
-                ...books,
-                {
-                  title,
-                  author,
-                  cover,
-                },
-              ]);
-              setTitle("");
-              setAuthor("");
-              setCover("");
-            }}
-          >
+          <form className="mt-3" onSubmit={handleSubmit}>
             <div className="form-floating mb-3">
               {/* This is a controlled input: */}
               <input
@@ -75,7 +106,9 @@ const Home = ({}) => {
               <label htmlFor="cover">Cover URL</label>
             </div>
             <div className="mb-3">
-              <button className="btn btn-primary">Add Book</button>
+              <button className="btn btn-primary" disabled={!enableButton()}>
+                Add Book
+              </button>
             </div>
           </form>
         </Col>
@@ -95,7 +128,12 @@ const Home = ({}) => {
       <Row>
         <Col>
           {books.map((book, idx) => (
-            <BookCard book={book} key={idx} />
+            <BookCard
+              book={book}
+              showDelete
+              onDelete={() => deleteBook(idx)}
+              key={idx}
+            />
           ))}
         </Col>
       </Row>
