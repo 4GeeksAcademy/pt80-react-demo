@@ -1,10 +1,6 @@
 import { useEffect } from "react";
 
 const Container = ({ fluid = false, children }) => {
-  useEffect(() => {
-    console.log("I get run on component mount!");
-  }, []);
-
   return <div className={`container${fluid ? "-fluid" : ""}`}>{children}</div>;
 };
 

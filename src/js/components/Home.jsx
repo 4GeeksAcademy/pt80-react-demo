@@ -68,7 +68,7 @@ const Home = ({}) => {
               <input
                 id="title"
                 name="title"
-                class="form-control form-control-lg"
+                className="form-control form-control-lg"
                 type="text"
                 aria-label="title"
                 value={title}
@@ -85,7 +85,7 @@ const Home = ({}) => {
               <input
                 id="author"
                 name="author"
-                class="form-control form-control-lg"
+                className="form-control form-control-lg"
                 type="text"
                 aria-label="author"
                 value={author}
@@ -97,7 +97,7 @@ const Home = ({}) => {
               <input
                 id="cover"
                 name="cover"
-                class="form-control form-control-lg"
+                className="form-control form-control-lg"
                 type="text"
                 aria-label="cover"
                 value={cover}
