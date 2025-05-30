@@ -6,6 +6,8 @@ const Home = ({}) => {
   // This is a container for book objects:
   const [books, setBooks] = useState([]);
 
+  const [readIds, setReadIds] = useState([0]);
+
   // This is temporary storage for the book properties:
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -18,13 +20,23 @@ const Home = ({}) => {
    */
   useEffect(() => {
     const library = localStorage.getItem("library");
+    const storedIds = localStorage.getItem("readIds");
 
     if (!library) {
       localStorage.setItem("library", "[]");
     }
 
+    if (!storedIds) {
+      localStorage.setItem("readIds", "[]");
+    }
+
     if (JSON.parse(library)?.length) {
       setBooks(JSON.parse(library));
+    }
+
+    // I TOLD YOU THAT WAS A HACKY FIX.
+    if (JSON.parse(storedIds)?.length !== 1) {
+      setReadIds(JSON.parse(storedIds));
     }
   }, []);
 
@@ -32,7 +44,11 @@ const Home = ({}) => {
     if (books.length) {
       localStorage.setItem("library", JSON.stringify(books));
     }
-  }, [books]);
+
+    if (readIds.length) {
+      localStorage.setItem("readIds", JSON.stringify(readIds));
+    }
+  }, [books, readIds]);
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
@@ -43,6 +59,7 @@ const Home = ({}) => {
           title,
           author,
           cover,
+          id: Math.max(books.map((book) => book.id)) + 1,
         },
       ]);
       setTitle("");
@@ -56,6 +73,15 @@ const Home = ({}) => {
   const deleteBook = (idx) => {
     localStorage.setItem("library", JSON.stringify(books.toSpliced(idx, 1)));
     setBooks(books.toSpliced(idx, 1));
+  };
+
+  const toggleRead = (id) => {
+    if (readIds.includes(id)) {
+      setReadIds(readIds.filter((x) => x !== id));
+    } else {
+      setReadIds([...readIds, id]);
+    }
+    localStorage.setItem("readIds", JSON.stringify(readIds));
   };
 
   return (
@@ -126,13 +152,15 @@ const Home = ({}) => {
       </Row>
       <hr />
       <Row>
-        <Col>
+        <Col width={{ sm: 8 }} offset={{ sm: 2 }}>
           {books.map((book, idx) => (
             <BookCard
               book={book}
-              showDelete
+              showButtons
+              haveRead={readIds.includes(book.id)}
               onDelete={() => deleteBook(idx)}
-              key={idx}
+              toggleRead={() => toggleRead(book.id)}
+              key={book.id}
             />
           ))}
         </Col>

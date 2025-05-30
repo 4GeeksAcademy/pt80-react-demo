@@ -11,40 +11,40 @@ const Row = ({ cols = null, children }) => {
 };
 
 const Col = ({ width = {}, offset = {}, children }) => {
-  let colsClasses = "";
+  // let colsClasses = "";
 
-  useEffect(() => {
-    for (const breakpoint in width) {
-      if (width[breakpoint]) {
-        colsClasses += `col-${breakpoint}-${width[breakpoint]} `;
-      }
-    }
-    for (const breakpoint in offset) {
-      if (offset[breakpoint]) {
-        colsClasses += `offset-${breakpoint}-${offset[breakpoint]} `;
-      }
-    }
-  }, []);
-
-  // const colsClasses = () => {
-  //   let classes = "";
-
+  // useEffect(() => {
   //   for (const breakpoint in width) {
   //     if (width[breakpoint]) {
-  //       classes += `col-${breakpoint}-${width[breakpoint]} `;
+  //       colsClasses += `col-${breakpoint}-${width[breakpoint]} `;
   //     }
   //   }
-
   //   for (const breakpoint in offset) {
   //     if (offset[breakpoint]) {
-  //       classes += `offset-${breakpoint}-${offset[breakpoint]} `;
+  //       colsClasses += `offset-${breakpoint}-${offset[breakpoint]} `;
   //     }
   //   }
+  // }, []);
 
-  //   return classes;
-  // };
+  const colsClasses = () => {
+    let classes = "";
 
-  return <div className={`col ${colsClasses}`}>{children}</div>;
+    for (const breakpoint in width) {
+      if (width[breakpoint]) {
+        classes += `col-${breakpoint}-${width[breakpoint]} `;
+      }
+    }
+
+    for (const breakpoint in offset) {
+      if (offset[breakpoint]) {
+        classes += `offset-${breakpoint}-${offset[breakpoint]} `;
+      }
+    }
+
+    return classes;
+  };
+
+  return <div className={`col ${colsClasses()}`}>{children}</div>;
 };
 
 export default Container;
