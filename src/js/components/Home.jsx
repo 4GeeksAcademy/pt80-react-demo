@@ -13,55 +13,41 @@ const Home = ({}) => {
   const [author, setAuthor] = useState("");
   const [cover, setCover] = useState("");
 
-  /**
-   * This useEffect stores and retrieves book objects
-   * in localStorage so that the application remembers
-   * stuff when you reload the page.
-   */
+  async function whatever() {
+    // this is how you make an async function
+    // with the function keyword
+  }
+
+  const loadData = async () => {
+    // This is how you make an async function
+    // with anonymous functions
+
+    const resp = await fetch("https://library.dotlag.space/library");
+    const data = await resp.json();
+    setBooks(data.books);
+  };
+
   useEffect(() => {
-    const library = localStorage.getItem("library");
-    const storedIds = localStorage.getItem("readIds");
-
-    if (!library) {
-      localStorage.setItem("library", "[]");
-    }
-
-    if (!storedIds) {
-      localStorage.setItem("readIds", "[]");
-    }
-
-    if (JSON.parse(library)?.length) {
-      setBooks(JSON.parse(library));
-    }
-
-    // I TOLD YOU THAT WAS A HACKY FIX.
-    if (JSON.parse(storedIds)?.length !== 1) {
-      setReadIds(JSON.parse(storedIds));
-    }
+    loadData();
   }, []);
 
-  useEffect(() => {
-    if (books.length) {
-      localStorage.setItem("library", JSON.stringify(books));
-    }
-
-    if (readIds.length) {
-      localStorage.setItem("readIds", JSON.stringify(readIds));
-    }
-  }, [books, readIds]);
-
-  const handleSubmit = (ev) => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault();
     if ([title, author, cover].some((x) => x)) {
-      setBooks([
-        ...books,
-        {
-          title,
-          author,
-          cover,
-          id: Math.max(books.map((book) => book.id)) + 1,
+      const resp = await fetch("https://library.dotlag.space/library/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      ]);
+        body: JSON.stringify({
+          title: title,
+          author: author,
+          cover: cover,
+        }),
+      });
+      const data = await resp.json();
+      setBooks([...books, data]);
+
       setTitle("");
       setAuthor("");
       setCover("");
