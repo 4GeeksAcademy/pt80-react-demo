@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import Container, { Col, Row } from "./Grid";
 import BookCard from "./BookCard";
+import useBrowserStorage from "../hooks/useBrowserStorage";
 
 const Home = ({}) => {
+  const [library, setLibrary] = useBrowserStorage("library", []);
+
   // This is a container for book objects:
   const [books, setBooks] = useState([]);
 
@@ -18,48 +21,46 @@ const Home = ({}) => {
    * in localStorage so that the application remembers
    * stuff when you reload the page.
    */
-  useEffect(() => {
-    const library = localStorage.getItem("library");
-    const storedIds = localStorage.getItem("readIds");
+  // useEffect(() => {
+  //   // const library = localStorage.getItem("library");
+  //   const storedIds = localStorage.getItem("readIds");
 
-    if (!library) {
-      localStorage.setItem("library", "[]");
-    }
+  //   if (!library) {
+  //     localStorage.setItem("library", "[]");
+  //   }
 
-    if (!storedIds) {
-      localStorage.setItem("readIds", "[]");
-    }
+  //   if (!storedIds) {
+  //     localStorage.setItem("readIds", "[]");
+  //   }
 
-    if (JSON.parse(library)?.length) {
-      setBooks(JSON.parse(library));
-    }
+  //   if (JSON.parse(library)?.length) {
+  //     setBooks(JSON.parse(library));
+  //   }
 
-    // I TOLD YOU THAT WAS A HACKY FIX.
-    if (JSON.parse(storedIds)?.length !== 1) {
-      setReadIds(JSON.parse(storedIds));
-    }
-  }, []);
+  //   // I TOLD YOU THAT WAS A HACKY FIX.
+  //   if (JSON.parse(storedIds)?.length !== 1) {
+  //     setReadIds(JSON.parse(storedIds));
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    if (books.length) {
-      localStorage.setItem("library", JSON.stringify(books));
-    }
+  // useEffect(() => {
+  //   setLibrary(books);
 
-    if (readIds.length) {
-      localStorage.setItem("readIds", JSON.stringify(readIds));
-    }
-  }, [books, readIds]);
+  //   // if (readIds.length) {
+  //   //   localStorage.setItem("readIds", JSON.stringify(readIds));
+  //   // }
+  // }, [books, readIds]);
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
     if ([title, author, cover].some((x) => x)) {
-      setBooks([
+      setLibrary([
         ...books,
         {
           title,
           author,
           cover,
-          id: Math.max(books.map((book) => book.id)) + 1,
+          id: Math.max(library.map((book) => book.id)) + 1,
         },
       ]);
       setTitle("");
@@ -153,7 +154,7 @@ const Home = ({}) => {
       <hr />
       <Row>
         <Col width={{ sm: 8 }} offset={{ sm: 2 }}>
-          {books.map((book, idx) => (
+          {library.map((book, idx) => (
             <BookCard
               book={book}
               showButtons
