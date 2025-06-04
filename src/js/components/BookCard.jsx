@@ -1,5 +1,6 @@
 import rigoBaby from "../../img/rigo-baby.jpg";
 import "./BookCard.css";
+import { DeleteButton } from "./Button";
 
 const BookCard = ({
   book,
@@ -28,11 +29,11 @@ const BookCard = ({
         </p>
         {showButtons ? (
           <p className="card-text">
-            <button className="btn btn-danger" onClick={onDelete}>
-              <i class="fa-solid fa-dumpster-fire"></i>
-            </button>
+            <DeleteButton warning="Are you sure?" onDelete={onDelete}>
+              <i className="fa-solid fa-dumpster-fire"></i>
+            </DeleteButton>
             <button className="btn btn-success ms-2" onClick={toggleRead}>
-              <i class="fa-solid fa-book-skull"></i>
+              <i className="fa-solid fa-book-skull"></i>
             </button>
           </p>
         ) : (

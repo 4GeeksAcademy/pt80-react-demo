@@ -4,6 +4,8 @@
  * components together if they are related in function.
  */
 
+import { useRef, useState } from "react";
+
 /**
  * Props are one-way bindings (we'll talk about that later)
  * letting you pass in data to your components
@@ -25,25 +27,6 @@ const Button = ({
   );
 };
 
-// const LinkButton = ({ href, outline = false, variant = "primary" }) => {
-//   return (
-//     <a href={href} className={`btn btn-${outline ? "outline-" : ""}${variant}`}>
-//       Button
-//     </a>
-//   );
-// };
-
-// const LabelButton = ({ htmlFor, outline = false, variant = "primary" }) => {
-//   return (
-//     <label
-//       htmlFor={htmlFor}
-//       className={`btn btn-${outline ? "outline-" : ""}${variant}`}
-//     >
-//       Button
-//     </label>
-//   );
-// };
-
 /**
  * children is a special prop, it's the stuff that's
  * between the opening and closing tag of your components
@@ -62,6 +45,30 @@ const DivButton = ({
     >
       {children}
     </div>
+  );
+};
+
+const DeleteButton = ({ children, warning, onDelete = () => null }) => {
+  const [confirm, setConfirm] = useState(false);
+
+  return (
+    <span onPointerLeave={() => setConfirm(false)}>
+      {confirm ? (
+        <DivButton
+          variant="danger"
+          onClick={() => {
+            onDelete();
+            setConfirm(false);
+          }}
+        >
+          {warning}
+        </DivButton>
+      ) : (
+        <DivButton variant="warning" onClick={() => setConfirm(true)}>
+          {children}
+        </DivButton>
+      )}
+    </span>
   );
 };
 
@@ -90,10 +97,4 @@ const ButtonToolbar = ({ children }) => {
 };
 
 export default Button;
-export {
-  ButtonGroup,
-  ButtonToolbar,
-  // LinkButton,
-  // LabelButton,
-  DivButton,
-};
+export { ButtonGroup, ButtonToolbar, DivButton, DeleteButton };

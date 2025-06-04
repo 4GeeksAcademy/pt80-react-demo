@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import Container, { Col, Row } from "./Grid";
 import BookCard from "./BookCard";
+import EditableText from "./EditableText";
 
 const Home = ({}) => {
   // This is a container for book objects:
   const [books, setBooks] = useState([]);
 
-  const [readIds, setReadIds] = useState([0]);
-
   // This is temporary storage for the book properties:
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [cover, setCover] = useState("");
+
+  const [test, setTest] = useState("Hello world!");
 
   async function whatever() {
     // this is how you make an async function
@@ -56,22 +57,30 @@ const Home = ({}) => {
 
   const enableButton = () => [title, author, cover].some((x) => x);
 
-  const deleteBook = (idx) => {
-    localStorage.setItem("library", JSON.stringify(books.toSpliced(idx, 1)));
-    setBooks(books.toSpliced(idx, 1));
-  };
-
-  const toggleRead = (id) => {
-    if (readIds.includes(id)) {
-      setReadIds(readIds.filter((x) => x !== id));
-    } else {
-      setReadIds([...readIds, id]);
+  const deleteBook = async (book_id) => {
+    const resp = await fetch(
+      `https://library.dotlag.space/library/${book_id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (resp.ok) {
+      loadData();
     }
-    localStorage.setItem("readIds", JSON.stringify(readIds));
   };
 
   return (
     <Container>
+      <Row>
+        <Col>
+          <h2>
+            <EditableText text={test} onSubmit={(x) => setTest(x)} />
+          </h2>
+        </Col>
+      </Row>
       <Row>
         <Col>
           <form className="mt-3" onSubmit={handleSubmit}>
@@ -139,13 +148,11 @@ const Home = ({}) => {
       <hr />
       <Row>
         <Col width={{ sm: 8 }} offset={{ sm: 2 }}>
-          {books.map((book, idx) => (
+          {books.map((book) => (
             <BookCard
               book={book}
               showButtons
-              haveRead={readIds.includes(book.id)}
-              onDelete={() => deleteBook(idx)}
-              toggleRead={() => toggleRead(book.id)}
+              onDelete={() => deleteBook(book.id)}
               key={book.id}
             />
           ))}
